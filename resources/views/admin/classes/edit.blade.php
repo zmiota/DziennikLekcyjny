@@ -1,21 +1,33 @@
 @extends('layouts.app')
 
 @section('content')
-<h1>Edytuj oddział</h1>
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 text-gray-900">
+                    <h1 class="text-2xl font-bold mb-6">Edytuj oddział</h1>
 
-<form action="{{ route('admin.classes.update', $class) }}" method="POST">
-    @csrf
-    @method('PUT')
-    <div>
-        <label>Nazwa oddziału</label><br>
-        <input type="text" name="name" value="{{ old('name', $class->name) }}" required maxlength="10">
+                    <form action="{{ route('admin.classes.update', $class) }}" method="POST" class="max-w-lg space-y-6">
+                        @csrf
+                        @method('PUT')
+                        <div>
+                            <label class="block font-medium text-sm text-gray-700">Nazwa oddziału</label>
+                            <input type="text" name="name" value="{{ old('name', $class->name) }}" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block w-full mt-1" required maxlength="10">
+                        </div>
+                        <div>
+                            <label class="block font-medium text-sm text-gray-700">Rok</label>
+                            <input type="text" name="year" value="{{ old('year', $class->year) }}" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block w-full mt-1" required maxlength="9">
+                        </div>
+                        
+                        <div class="flex items-center gap-4">
+                            <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 transition">
+                                Zapisz zmiany
+                            </button>
+                            <a href="{{ url()->previous() }}" class="text-sm text-gray-600 hover:text-gray-900 underline">Anuluj</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-    <div>
-        <label>Rok</label><br>
-        <input type="text" name="year" value="{{ old('year', $class->year) }}" required maxlength="9">
-    </div>
-    <br>
-    <button type="submit">Zapisz zmiany</button>
-    <a href="{{ url()->previous() }}">Anuluj</a>
-</form>
 @endsection
