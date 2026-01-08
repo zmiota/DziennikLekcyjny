@@ -1,63 +1,79 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="py-12">
+    <div class="py-12 bg-gray-50 min-h-screen">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
-                <div class="p-6 text-gray-900">
-                    <h1 class="text-2xl font-bold text-gray-800">Panel Administratora</h1>
-                    <p class="mt-2 text-gray-600">
-                        Witaj, <span class="font-semibold text-indigo-600">{{ auth()->user()->name }}</span>! Wybierz moduł, którym chcesz zarządzać.
-                    </p>
-                </div>
+            <div class="text-center mb-10">
+                <h1 class="text-4xl font-extrabold text-gray-900 tracking-tight">
+                    Panel Administratora
+                </h1>
+                <p class="mt-2 text-lg text-gray-600">
+                    Witaj, <span class="font-semibold text-indigo-600">{{ auth()->user()->name }}</span>! Czym chcesz się dzisiaj zająć?
+                </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 px-4 sm:px-0">
 
-                <a href="{{ route('admin.users.index') }}" class="group block bg-white overflow-hidden shadow-sm sm:rounded-lg hover:shadow-md transition duration-300 ease-in-out border-l-4 border-blue-500">
-                    <div class="p-6 flex items-center">
-                        <div class="p-3 bg-blue-100 rounded-full text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition duration-300">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
-                            </svg>
-                        </div>
-                        <div class="ml-4">
-                            <h3 class="text-lg font-semibold text-gray-800 group-hover:text-blue-600">Użytkownicy</h3>
-                            <p class="text-sm text-gray-500">Zarządzanie kontami</p>
-                        </div>
+                <a href="{{ route('admin.users.index') }}" 
+                   class="group bg-white rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 hover:border-purple-100 p-8 flex flex-col items-center text-center transition-all duration-300 transform hover:-translate-y-1">
+                    
+                    <div class="w-20 h-20 rounded-full flex items-center justify-center bg-purple-50 text-purple-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors duration-300 mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
                     </div>
+
+                    <h3 class="text-xl font-bold text-gray-800 group-hover:text-indigo-600 transition-colors">Użytkownicy</h3>
+                    <p class="text-sm text-gray-500 mt-2 mb-6">Nauczyciele, Uczniowie, Admini</p>
+                    
+                    <span class="mt-auto px-4 py-2 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 group-hover:bg-indigo-100 transition-colors">
+                        Zarządzaj kontami &rarr;
+                    </span>
                 </a>
 
-                <a href="{{ route('admin.subjects.index') }}" class="group block bg-white overflow-hidden shadow-sm sm:rounded-lg hover:shadow-md transition duration-300 ease-in-out border-l-4 border-purple-500">
-                    <div class="p-6 flex items-center">
-                        <div class="p-3 bg-purple-100 rounded-full text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition duration-300">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
-                            </svg>
-                        </div>
-                        <div class="ml-4">
-                            <h3 class="text-lg font-semibold text-gray-800 group-hover:text-purple-600">Przedmioty</h3>
-                            <p class="text-sm text-gray-500">Lista przedmiotów</p>
-                        </div>
+                <a href="{{ route('admin.subjects.index') }}" 
+                   class="group bg-white rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 hover:border-purple-100 p-8 flex flex-col items-center text-center transition-all duration-300 transform hover:-translate-y-1">
+                    
+                    <div class="w-20 h-20 rounded-full flex items-center justify-center bg-purple-50 text-purple-600 group-hover:bg-purple-600 group-hover:text-white transition-colors duration-300 mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                        </svg>
                     </div>
+
+                    <h3 class="text-xl font-bold text-gray-800 group-hover:text-purple-600 transition-colors">Przedmioty</h3>
+                    <p class="text-sm text-gray-500 mt-2 mb-6">Matematyka, Polski, Historia...</p>
+                    
+                    <span class="mt-auto px-4 py-2 rounded-full text-xs font-semibold bg-purple-50 text-purple-700 group-hover:bg-purple-100 transition-colors">
+                        Edytuj listę &rarr;
+                    </span>
                 </a>
 
-                <a href="{{ route('admin.classes.index') }}" class="group block bg-white overflow-hidden shadow-sm sm:rounded-lg hover:shadow-md transition duration-300 ease-in-out border-l-4 border-emerald-500">
-                    <div class="p-6 flex items-center">
-                        <div class="p-3 bg-emerald-100 rounded-full text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition duration-300">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
-                            </svg>
-                        </div>
-                        <div class="ml-4">
-                            <h3 class="text-lg font-semibold text-gray-800 group-hover:text-emerald-600">Oddziały</h3>
-                            <p class="text-sm text-gray-500">Zarządzanie klasami</p>
-                        </div>
+                <a href="{{ route('admin.classes.index') }}" 
+                   class="group bg-white rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 hover:border-emerald-100 p-8 flex flex-col items-center text-center transition-all duration-300 transform hover:-translate-y-1">
+                    
+                    <div class="w-20 h-20 rounded-full flex items-center justify-center bg-emerald-50 text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white transition-colors duration-300 mb-6">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                        </svg>
                     </div>
+
+                    <h3 class="text-xl font-bold text-gray-800 group-hover:text-emerald-600 transition-colors">Oddziały</h3>
+                    <p class="text-sm text-gray-500 mt-2 mb-6">Klasy, Roczniki, Grupy</p>
+                    
+                    <span class="mt-auto px-4 py-2 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 group-hover:bg-emerald-100 transition-colors">
+                        Przeglądaj &rarr;
+                    </span>
                 </a>
 
             </div>
+            
+            <div class="mt-12 text-center">
+                 <div class="inline-flex items-center p-1 rounded-full border bg-white shadow-sm">
+                    <span class="px-3 py-1 text-xs text-gray-400 font-medium">System gotowy do pracy</span>
+                 </div>
+            </div>
+
         </div>
     </div>
 @endsection
