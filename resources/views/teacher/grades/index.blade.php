@@ -17,8 +17,8 @@
                     </a>
                 </div>
 
-                <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200 text-sm">
+                <div class="overflow-x-auto flex justify-center p-4">
+                    <table class="w-auto divide-y divide-gray-200 text-sm border border-gray-100 rounded-lg">
                         <thead class="bg-gray-100">
                             <tr>
                                 <th class="px-6 py-4 text-left font-bold text-gray-600 uppercase tracking-wider border-r border-gray-200">ID</th>

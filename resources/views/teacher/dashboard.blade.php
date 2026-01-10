@@ -34,14 +34,14 @@
 
                 <p class="px-3 text-xs font-bold text-gray-400 uppercase tracking-wider mt-6 mb-2" style="color: #9ca3af;">Dziennik</p>
 
-                <a href="{{ route('teacher.grades.index') }}" class="flex items-center px-3 py-3 text-gray-300 hover:bg-gray-800 hover:text-white rounded-md group transition-colors">
+                <a href="{{ route('teacher.grades.create') }}" class="flex items-center px-3 py-3 text-gray-300 hover:bg-gray-800 hover:text-white rounded-md group transition-colors">
                     <svg class="w-5 h-5 mr-3 text-gray-400 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
                     <span class="font-medium">Wystaw Oceny</span>
                 </a>
                 
-                <a href="#" class="flex items-center px-3 py-3 text-gray-300 hover:bg-gray-800 hover:text-white rounded-md group transition-colors">
+                <a href="{{ route('teacher.grades.index') }}" class="flex items-center px-3 py-3 text-gray-300 hover:bg-gray-800 hover:text-white rounded-md group transition-colors">
                     <svg class="w-5 h-5 mr-3 text-gray-400 group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    <span class="font-medium">Historia zmian</span>
+                    <span class="font-medium">Przeglądaj dzienni</span>
                 </a>
             </nav>
         </aside>
