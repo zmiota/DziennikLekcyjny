@@ -4,55 +4,76 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    <h1 class="text-2xl font-bold mb-6">Dodaj użytkownika</h1>
+                <div class="p-6 text-gray-900 border-b border-gray-200">
+                    
+                    <div class="mb-6">
+                        <h1 class="text-2xl font-bold text-gray-800">Dodaj użytkownika</h1>
+                        <p class="text-sm text-gray-600 mt-1">Utwórz nowego użytkownika (nauczyciela, ucznia lub admina).</p>
+                    </div>
 
-                    @if ($errors->any())
-                        <div class="mb-4 p-4 bg-red-50 border-l-4 border-red-500 text-red-700">
-                            <p class="font-bold">Wystąpiły błędy:</p>
-                            <ul class="list-disc ml-5">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-
-                    <form method="POST" action="{{ route('admin.users.store') }}" class="space-y-6 max-w-2xl">
+                    <form action="{{ route('admin.users.store') }}" method="POST" class="max-w-lg space-y-6">
                         @csrf
 
                         <div>
-                            <label class="block font-medium text-sm text-gray-700">Imię</label>
-                            <input type="text" name="name" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block w-full mt-1" required>
+                            <label class="block font-medium text-sm text-gray-700" for="name">Imię i Nazwisko</label>
+                            <input type="text" 
+                                   name="name" 
+                                   id="name"
+                                   value="{{ old('name') }}" 
+                                   class="border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md shadow-sm block w-full mt-1" 
+                                   required 
+                                   placeholder="np. Jan Kowalski">
+                            @error('name')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <div>
-                            <label class="block font-medium text-sm text-gray-700">Email</label>
-                            <input type="email" name="email" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block w-full mt-1" required autocomplete="off">
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block font-medium text-sm text-gray-700">Hasło</label>
-                                <input type="password" name="password" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block w-full mt-1" required autocomplete="off">
-                            </div>
-
-                            <div>
-                                <label class="block font-medium text-sm text-gray-700">Potwierdź hasło</label>
-                                <input type="password" name="password_confirmation" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block w-full mt-1" required>
-                            </div>
+                            <label class="block font-medium text-sm text-gray-700" for="email">Adres Email</label>
+                            <input type="email" 
+                                   name="email" 
+                                   id="email"
+                                   value="{{ old('email') }}" 
+                                   class="border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md shadow-sm block w-full mt-1" 
+                                   required 
+                                   placeholder="np. jan@szkola.pl">
+                            @error('email')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <div>
-                            <label class="block font-medium text-sm text-gray-700">Rola</label>
-                            <select name="role" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block w-full mt-1" required>
-                                <option value="">-- wybierz --</option>
-                                <option value="admin">Admin</option>
-                                <option value="teacher">Teacher</option>
-                                <option value="student">Student</option>
+                            <label class="block font-medium text-sm text-gray-700" for="role">Rola</label>
+                            <select name="role" id="role" class="border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md shadow-sm block w-full mt-1">
+                                <option value="student" {{ old('role') == 'student' ? 'selected' : '' }}>Uczeń</option>
+                                <option value="teacher" {{ old('role') == 'teacher' ? 'selected' : '' }}>Nauczyciel</option>
+                                <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Administrator</option>
                             </select>
+                            @error('role')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
+                        <div>
+                            <label class="block font-medium text-sm text-gray-700" for="password">Hasło</label>
+                            <input type="password" 
+                                   name="password" 
+                                   id="password"
+                                   class="border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md shadow-sm block w-full mt-1" 
+                                   required autocomplete="new-password">
+                            @error('password')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <label class="block font-medium text-sm text-gray-700" for="password_confirmation">Potwierdź hasło</label>
+                            <input type="password" 
+                                   name="password_confirmation" 
+                                   id="password_confirmation"
+                                   class="border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-md shadow-sm block w-full mt-1" 
+                                   required>
+                        </div>
                         <div>
                             <label class="block font-medium text-sm text-gray-700">Klasa (tylko dla uczniów)</label>
                             <select name="class_id" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block w-full mt-1">
@@ -73,11 +94,13 @@
                             <p class="text-xs text-gray-500 mt-1">Przytrzymaj Ctrl (lub Cmd), aby zaznaczyć wiele.</p>
                         </div>
 
-                        <div class="flex items-center gap-4">
-                            <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                                Zapisz
+                        <div class="flex items-center gap-4 pt-2">
+                            <button type="submit" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 transition focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                            style="background-color: #059669;">
+
+                                Utwórz użytkownika
                             </button>
-                            <a href="{{ url()->previous() }}" class="text-sm text-gray-600 hover:text-gray-900 underline">Anuluj</a>
+                            <a href="{{ route('admin.users.index') }}" class="text-sm text-gray-600 hover:text-gray-900 underline">Anuluj</a>
                         </div>
                     </form>
                 </div>

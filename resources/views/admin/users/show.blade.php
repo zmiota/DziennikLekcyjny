@@ -2,86 +2,94 @@
 
 @section('content')
     <div class="py-12">
-        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white shadow-lg sm:rounded-lg overflow-hidden border border-gray-200">
                 
-                <div class="px-6 py-5 border-b border-gray-200 bg-gray-50 flex justify-between items-center">
-                    <h3 class="text-xl leading-6 font-bold text-gray-900">
-                        Profil Użytkownika
-                    </h3>
-                    <span class="px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest text-white"
-                          style="background-color: {{ $user->role === 'admin' ? '#ef4444' : ($user->role === 'teacher' ? '#10b981' : '#3b82f6') }};">
-                        {{ $user->role }}
-                    </span>
+                <div class="px-6 py-5 border-b border-gray-200 bg-gray-50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div>
+                        <h1 class="text-2xl font-bold text-gray-800">Szczegóły użytkownika</h1>
+                        <p class="text-sm text-gray-500 mt-1">ID: <span class="font-mono text-gray-700">#{{ $user->id }}</span></p>
+                    </div>
+
+                    <div>
+                        @if($user->role === 'admin')
+                            <span class="px-4 py-2 inline-flex text-sm leading-5 font-bold rounded-full bg-red-100 text-red-800 border border-red-200">
+                                Administrator
+                            </span>
+                        @elseif($user->role === 'teacher')
+                            <span class="px-4 py-2 inline-flex text-sm leading-5 font-bold rounded-full bg-blue-100 text-blue-800 border border-blue-200">
+                                Nauczyciel
+                            </span>
+                        @else
+                            <span class="px-4 py-2 inline-flex text-sm leading-5 font-bold rounded-full bg-green-100 text-green-800 border border-green-200">
+                                Uczeń
+                            </span>
+                        @endif
+                    </div>
                 </div>
 
-                <div class="p-6">
-                    <dl class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+                <div class="p-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         
-                        <div class="col-span-1">
-                            <dt class="text-sm font-medium text-gray-500 uppercase tracking-wider">Imię i Nazwisko</dt>
-                            <dd class="mt-1 text-lg font-semibold text-gray-900 border-b border-gray-100 pb-2">
+                        <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                            <dt class="text-sm font-medium text-gray-500 uppercase tracking-wider mb-1">
+                                Imię i Nazwisko
+                            </dt>
+                            <dd class="text-lg font-semibold text-gray-900 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                </svg>
                                 {{ $user->name }}
                             </dd>
                         </div>
 
-                        <div class="col-span-1">
-                            <dt class="text-sm font-medium text-gray-500 uppercase tracking-wider">Adres Email</dt>
-                            <dd class="mt-1 text-lg font-mono text-gray-700 border-b border-gray-100 pb-2">
-                                {{ $user->email }}
+                        <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                            <dt class="text-sm font-medium text-gray-500 uppercase tracking-wider mb-1">
+                                Adres Email
+                            </dt>
+                            <dd class="text-lg font-semibold text-gray-900 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg>
+                                <a href="mailto:{{ $user->email }}" class="hover:text-blue-600 transition">
+                                    {{ $user->email }}
+                                </a>
                             </dd>
                         </div>
 
-                        <div class="col-span-1">
-                            <dt class="text-sm font-medium text-gray-500 uppercase tracking-wider">Przypisana Klasa</dt>
-                            <dd class="mt-1 text-base text-gray-900">
-                                @if($user->class)
-                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-indigo-100 text-indigo-800">
-                                        {{ $user->class->name }}
-                                    </span>
-                                @else
-                                    <span class="text-gray-400 italic">Brak przypisanej klasy</span>
-                                @endif
-                            </dd>
-                        </div>
-
-                        <div class="col-span-1">
-                            <dt class="text-sm font-medium text-gray-500 uppercase tracking-wider">Data rejestracji</dt>
-                            <dd class="mt-1 text-base text-gray-900">
+                        <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                            <dt class="text-sm font-medium text-gray-500 uppercase tracking-wider mb-1">
+                                Data rejestracji
+                            </dt>
+                            <dd class="text-lg font-semibold text-gray-900 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg>
                                 {{ $user->created_at->format('d.m.Y H:i') }}
                             </dd>
                         </div>
 
-                        <div class="col-span-1 md:col-span-2 mt-4">
-                            <dt class="text-sm font-medium text-gray-500 uppercase tracking-wider mb-2">Przypisane przedmioty</dt>
-                            <dd class="p-4 bg-gray-50 rounded-lg border border-gray-100">
-                                @if($user->subjects->count() > 0)
-                                    <div class="flex flex-wrap gap-2">
-                                        @foreach($user->subjects as $subject)
-                                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-white border border-gray-300 text-gray-700 shadow-sm">
-                                                {{ $subject->name }}
-                                            </span>
-                                        @endforeach
-                                    </div>
-                                @else
-                                    <span class="text-gray-500 italic">Ten użytkownik nie ma przypisanych żadnych przedmiotów.</span>
-                                @endif
+                        <div class="bg-gray-50 p-4 rounded-lg border border-gray-100">
+                            <dt class="text-sm font-medium text-gray-500 uppercase tracking-wider mb-1">
+                                Ostatnia modyfikacja
+                            </dt>
+                            <dd class="text-lg font-semibold text-gray-900 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                {{ $user->updated_at->format('d.m.Y H:i') }}
                             </dd>
                         </div>
 
-                    </dl>
+                    </div>
                 </div>
 
-                <div class="px-6 py-4 bg-gray-50 border-t border-gray-200 flex justify-end gap-3">
-                    <a href="{{ route('admin.users.index') }}" 
-                       class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition">
-                        Wróć do listy
+                <div class="px-6 py-4 bg-gray-50 border-t border-gray-200 flex flex-col sm:flex-row justify-between items-center gap-4">
+                    
+                    <a href="{{ route('admin.users.index') }}" class="text-sm text-gray-600 hover:text-gray-900 font-medium flex items-center transition">
+                        &larr; Wróć do listy użytkowników
                     </a>
-                    <a href="{{ route('admin.users.edit', $user->id) }}" 
-                       class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 transition"
-                       style="background-color: #eab308;">
-                        Edytuj profil
-                    </a>
+
                 </div>
 
             </div>

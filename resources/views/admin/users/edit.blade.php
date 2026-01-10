@@ -4,55 +4,85 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    <h1 class="text-2xl font-bold mb-6">Edytuj użytkownika</h1>
+                <div class="p-6 text-gray-900 border-b border-gray-200">
+                    
+                    <div class="mb-6">
+                        <h1 class="text-2xl font-bold text-gray-800">Edytuj użytkownika</h1>
+                        <p class="text-sm text-gray-600 mt-1">Edytujesz konto: <strong>{{ $user->email }}</strong></p>
+                    </div>
 
-                    @if ($errors->any())
-                        <div class="mb-4 p-4 bg-red-50 border-l-4 border-red-500 text-red-700">
-                            <ul class="list-disc ml-5">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-
-                    <form method="POST" action="{{ route('admin.users.update', $user->id) }}" class="space-y-6 max-w-2xl">
+                    <form action="{{ route('admin.users.update', $user) }}" method="POST" class="max-w-lg space-y-6">
                         @csrf
                         @method('PUT')
 
                         <div>
-                            <label class="block font-medium text-sm text-gray-700">Imię</label>
-                            <input type="text" name="name" value="{{ old('name', $user->name) }}" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block w-full mt-1" required>
+                            <label class="block font-medium text-sm text-gray-700" for="name">Imię i Nazwisko</label>
+                            <input type="text" 
+                                   name="name" 
+                                   id="name"
+                                   value="{{ old('name', $user->name) }}" 
+                                   class="border-gray-300 focus:border-amber-500 focus:ring-amber-500 rounded-md shadow-sm block w-full mt-1" 
+                                   required>
+                            @error('name')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <div>
-                            <label class="block font-medium text-sm text-gray-700">Email</label>
-                            <input type="email" name="email" value="{{ old('email', $user->email) }}" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block w-full mt-1" required>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block font-medium text-sm text-gray-700">Nowe hasło (opcjonalnie)</label>
-                                <input type="password" name="password" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block w-full mt-1">
-                            </div>
-
-                            <div>
-                                <label class="block font-medium text-sm text-gray-700">Potwierdź hasło</label>
-                                <input type="password" name="password_confirmation" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block w-full mt-1">
-                            </div>
+                            <label class="block font-medium text-sm text-gray-700" for="email">Adres Email</label>
+                            <input type="email" 
+                                   name="email" 
+                                   id="email"
+                                   value="{{ old('email', $user->email) }}" 
+                                   class="border-gray-300 focus:border-amber-500 focus:ring-amber-500 rounded-md shadow-sm block w-full mt-1" 
+                                   required>
+                            @error('email')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <div>
-                            <label class="block font-medium text-sm text-gray-700">Rola</label>
-                            <select name="role" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block w-full mt-1" required>
-                                <option value="admin" {{ $user->role === 'admin' ? 'selected' : '' }}>Admin</option>
-                                <option value="teacher" {{ $user->role === 'teacher' ? 'selected' : '' }}>Teacher</option>
-                                <option value="student" {{ $user->role === 'student' ? 'selected' : '' }}>Student</option>
+                            <label class="block font-medium text-sm text-gray-700" for="role">Rola</label>
+                            <select name="role" id="role" class="border-gray-300 focus:border-amber-500 focus:ring-amber-500 rounded-md shadow-sm block w-full mt-1">
+                                <option value="student" {{ old('role', $user->role) == 'student' ? 'selected' : '' }}>Uczeń</option>
+                                <option value="teacher" {{ old('role', $user->role) == 'teacher' ? 'selected' : '' }}>Nauczyciel</option>
+                                <option value="admin" {{ old('role', $user->role) == 'admin' ? 'selected' : '' }}>Administrator</option>
                             </select>
+                            @error('role')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <div>
+                            <label class="block font-medium text-sm text-gray-700 mb-1" for="subjects">
+                                Przypisane przedmioty
+                            </label>
+                            
+                            <select name="subjects[]" 
+                                    id="subjects" 
+                                    multiple 
+                                    size="5" 
+                                    class="border-gray-300 focus:border-amber-500 focus:ring-amber-500 rounded-md shadow-sm block w-full mt-1">
+                                
+                                @foreach($subjects as $subject)
+                                    <option value="{{ $subject->id }}"
+                                        {{-- Sprawdź old input LUB czy użytkownik ma już ten przedmiot w bazie --}}
+                                        {{ in_array($subject->id, old('subjects', $user->subjects->pluck('id')->toArray())) ? 'selected' : '' }}>
+                                        {{ $subject->name }}
+                                    </option>
+                                @endforeach
+
+                            </select>
+                            
+                            <p class="text-xs text-gray-500 mt-2">
+                                <span class="font-bold">Wskazówka:</span> Przytrzymaj <kbd class="font-mono bg-gray-100 border border-gray-300 rounded px-1">Ctrl</kbd> (lub <kbd>Cmd</kbd>), aby edytować zaznaczenie.
+                            </p>
+                            
+                            @error('subjects')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+<div>
                             <label class="block font-medium text-sm text-gray-700">Klasa</label>
                             <select name="class_id" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block w-full mt-1">
                                 <option value="">— brak —</option>
@@ -63,24 +93,26 @@
                                 @endforeach
                             </select>
                         </div>
-
-                        <div>
-                            <label class="block font-medium text-sm text-gray-700 mb-1">Przedmioty</label>
-                            <select name="subjects[]" multiple size="5" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block w-full mt-1">
-                                @foreach($subjects as $subject)
-                                    <option value="{{ $subject->id }}"
-                                        {{ in_array($subject->id, old('subjects', $user->subjects->pluck('id')->toArray())) ? 'selected' : '' }}>
-                                        {{ $subject->name }}
-                                    </option>
-                                @endforeach
-                            </select>
+                        <div class="border-t border-gray-100 pt-4 mt-4">
+                            <label class="block font-medium text-sm text-gray-700" for="password">
+                                Nowe hasło <span class="text-gray-400 font-normal">(pozostaw puste, aby nie zmieniać)</span>
+                            </label>
+                            <input type="password" 
+                                   name="password" 
+                                   id="password"
+                                   class="border-gray-300 focus:border-amber-500 focus:ring-amber-500 rounded-md shadow-sm block w-full mt-1" 
+                                   autocomplete="new-password">
+                            @error('password')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
-                        <div class="flex items-center gap-4">
-                            <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 focus:bg-gray-700 active:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
-                                Zapisz zmiany
+                        <div class="flex items-center gap-4 pt-2">
+                            <button type="submit" class="inline-flex items-center px-4 py-2 bg-amber-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-amber-700 transition focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
+                            style="background-color: #059669;">
+                                Zaktualizuj
                             </button>
-                            <a href="{{ url()->previous() }}" class="text-sm text-gray-600 hover:text-gray-900 underline">Anuluj</a>
+                            <a href="{{ route('admin.users.index') }}" class="text-sm text-gray-600 hover:text-gray-900 underline">Anuluj</a>
                         </div>
                     </form>
                 </div>

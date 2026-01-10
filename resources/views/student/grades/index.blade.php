@@ -7,10 +7,11 @@
                 
                 <div class="p-6 bg-white border-b border-gray-200">
                     <h1 class="text-2xl font-bold text-gray-800">Moje Oceny</h1>
+                    <p class="text-sm text-gray-600 mt-1">Poniżej znajduje się wykaz Twoich ocen z poszczególnych przedmiotów.</p>
                 </div>
 
-                <div class="overflow-x-auto">
-                    <table class="min-w-full divide-y divide-gray-200 text-sm">
+                <div class="overflow-x-auto flex justify-center p-4">
+                    <table class="w-auto divide-y divide-gray-200 text-sm border border-gray-100 rounded-lg shadow-sm">
                         <thead class="bg-gray-100">
                             <tr>
                                 <th class="px-6 py-4 text-left font-bold text-gray-600 uppercase tracking-wider border-r border-gray-200">Przedmiot</th>
@@ -25,15 +26,18 @@
                                     <td class="px-6 py-4 whitespace-nowrap font-semibold text-gray-800 border-r border-gray-200">
                                         {{ $grade->subject->name }}
                                     </td>
+                                    
                                     <td class="px-6 py-4 whitespace-nowrap text-center border-r border-gray-200">
                                         <span class="inline-flex items-center justify-center w-8 h-8 rounded-full text-lg font-bold text-white shadow-sm"
                                               style="background-color: {{ $grade->value >= 4 ? '#059669' : ($grade->value >= 2 ? '#d97706' : '#dc2626') }};">
                                             {{ $grade->value }}
                                         </span>
                                     </td>
+                                    
                                     <td class="px-6 py-4 whitespace-nowrap text-gray-600 border-r border-gray-200">
                                         {{ $grade->teacher->name }}
                                     </td>
+                                    
                                     <td class="px-6 py-4 whitespace-nowrap text-gray-500 font-mono">
                                         {{ $grade->created_at->format('d.m.Y') }}
                                     </td>
@@ -43,7 +47,7 @@
                             @if($grades->isEmpty())
                                 <tr>
                                     <td colspan="4" class="px-6 py-8 text-center text-gray-500 italic">
-                                        Nie masz jeszcze żadnych ocen.
+                                        Nie masz jeszcze wystawionych żadnych ocen.
                                     </td>
                                 </tr>
                             @endif
